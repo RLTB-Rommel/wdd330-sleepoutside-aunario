@@ -17,7 +17,8 @@ function addProductToCart(product) {
   cart.push(product);
 
   // Save the updated cart back to localStorage
-  localStorage.setItem('so-cart', JSON.stringify(cart));
+  //localStorage.setItem('so-cart', JSON.stringify(cart));
+    setLocalStorage('so-cart', cart); // Now the import is actually used
 }
 
 // add to cart button event handler
