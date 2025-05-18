@@ -28,13 +28,14 @@ async function renderProductDetails() {
         <p>Please check the URL or contact support if you believe this is an error.</p>
       `;
     }
-  } catch (err) {
+    } catch (err) {
     console.error('❗ Error loading product:', err);
     document.querySelector("main").innerHTML = `
-      <h2>⚠️ Error Loading Product</h2>
-      <p>There was a problem retrieving product details. Please try again later.</p>
-    `;
-  }
+        <h2>⚠️ Error Loading Product</h2>
+        <p><strong>${err.message}</strong></p>
+        <p>Check the console for details.</p>
+  ` ;
+    }
 }
 
 renderProductDetails();
