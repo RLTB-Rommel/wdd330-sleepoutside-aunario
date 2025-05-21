@@ -1,6 +1,6 @@
 import { getParam, setLocalStorage } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
-import ProductDetails from "./ProductDetails.mjs";
+import ProductDetails from "./testproduct.mjs";
 
 // 1. Get the product ID from the URL query string (?id=...)
 const productId = getParam("id");
