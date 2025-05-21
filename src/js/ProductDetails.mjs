@@ -14,7 +14,10 @@ export default class ProductDetails {
       if (this.product) {
         this.renderProductDetails();
 
-        qs("#addToCart")?.addEventListener("click", this.addProductToCart.bind(this));
+        const addBtn = qs("#addToCart");
+        if (addBtn) {
+          addBtn.addEventListener("click", this.addProductToCart.bind(this));
+        }
       } else {
         this.renderMessage(
           "❌ Product Not Found",
@@ -30,14 +33,29 @@ export default class ProductDetails {
   renderProductDetails() {
     const p = this.product;
 
-    qs('#product-name')?.textContent = p.Name ?? "Unnamed Product";
-    qs('#product-brand')?.textContent = p.Brand?.Name ?? "Unknown Brand";
-    qs('#product-image')?.src = p.Image ?? "";
-    qs('#product-image')?.alt = p.Name ?? "Product Image";
-    qs('#product-price')?.textContent = p.FinalPrice ? `$${p.FinalPrice}` : "No price available";
-    qs('#product-color')?.textContent = p.Colors?.[0]?.ColorName ?? "N/A";
-    qs('#product-description')?.innerHTML = p.DescriptionHtmlSimple ?? "No description available";
-    qs('#addToCart')?.setAttribute('data-id', p.Id);
+    const nameEl = qs('#product-name');
+    if (nameEl) nameEl.textContent = p.Name ?? "Unnamed Product";
+
+    const brandEl = qs('#product-brand');
+    if (brandEl) brandEl.textContent = p.Brand?.Name ?? "Unknown Brand";
+
+    const imgEl = qs('#product-image');
+    if (imgEl) {
+      imgEl.src = p.Image ?? "";
+      imgEl.alt = p.Name ?? "Product Image";
+    }
+
+    const priceEl = qs('#product-price');
+    if (priceEl) priceEl.textContent = p.FinalPrice ? `$${p.FinalPrice}` : "No price available";
+
+    const colorEl = qs('#product-color');
+    if (colorEl) colorEl.textContent = p.Colors?.[0]?.ColorName ?? "N/A";
+
+    const descEl = qs('#product-description');
+    if (descEl) descEl.innerHTML = p.DescriptionHtmlSimple ?? "No description available";
+
+    const addBtn = qs('#addToCart');
+    if (addBtn) addBtn.setAttribute('data-id', p.Id);
   }
 
   renderMessage(title, message) {
