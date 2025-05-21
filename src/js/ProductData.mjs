@@ -1,5 +1,3 @@
-// src/js/ProductData.mjs
-
 function convertToJson(res) {
   if (res.ok) {
     return res.json();
@@ -11,17 +9,28 @@ function convertToJson(res) {
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `/json/${this.category}.json`; // Vite serves from /public
+    // Vite serves public/ folder as root (/), so json files go in /public/json/
+    this.path = `/json/${encodeURIComponent(this.category)}.json`;
   }
 
   getData() {
     return fetch(this.path)
       .then(convertToJson)
-      .then((data) => data);
+      .then((data) => data)
+      .catch((err) => {
+        console.error(`Failed to load data from ${this.path}:`, err);
+        return []; // Return empty array so the app can handle it gracefully
+      });
   }
 
   async findProductById(id) {
     const products = await this.getData();
-    return products.find((item) => item.Id === id);
+    const product = products.find((item) => item.Id === id);
+
+    if (!product) {
+      console.warn(`Product with id "${id}" not found in ${this.path}`);
+    }
+
+    return product;
   }
 }

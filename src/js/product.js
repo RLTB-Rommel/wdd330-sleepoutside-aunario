@@ -1,17 +1,15 @@
-// src/js/product.js
-
 import { getParam, setLocalStorage } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
-// 1. Get the product ID from the URL
-const productId = getParam("product");
+// 1. Get the product ID from the URL query string (?id=...)
+const productId = getParam("id");
 
-// 2. Create a ProductData source (tents.json)
+// 2. Create a ProductData instance for the 'tents' category
 const dataSource = new ProductData("tents");
 
-// 3. Create a ProductDetails instance
+// 3. Create a ProductDetails instance with the ID and data
 const product = new ProductDetails(productId, dataSource);
 
-// 4. Initialize the product page (load + render + event listener)
+// 4. Initialize the detail page: fetch + render + event setup
 product.init();

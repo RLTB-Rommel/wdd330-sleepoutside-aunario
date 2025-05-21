@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sleep Outside | Product Details</title>
 
+    <!-- Meta for SEO and accessibility -->
+    <meta name="description" content="View details about our outdoor gear including tents, sleeping bags, and accessories.">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="/src/css/style.css" />
 
+    <!-- Module script for dynamic rendering -->
     <script type="module" src="/src/js/product.js"></script>
   </head>
 
@@ -24,21 +29,23 @@
 
     <main class="divider">
       <section class="product-detail">
-        <h3 id="product-brand">Brand Name</h3>
-        <h2 id="product-name">Product Name</h2>
+        <div class="product-detail__info">
+          <h3 id="product-brand">Brand Name</h3>
+          <h2 id="product-name">Product Name</h2>
 
-        <img
-          id="product-image"
-          class="divider"
-          src=""
-          alt="Product Image"
-        />
+          <img
+            id="product-image"
+            class="divider"
+            src=""
+            alt=""
+          />
 
-        <p id="product-price" class="product-card__price">$0.00</p>
-        <p id="product-color" class="product__color">Color</p>
-        <p id="product-description" class="product__description">
-          Product description will load here.
-        </p>
+          <p id="product-price" class="product-card__price">$0.00</p>
+          <p id="product-color" class="product__color">Color</p>
+          <p id="product-description" class="product__description">
+            Product description will load here.
+          </p>
+        </div>
 
         <div class="product-detail__add">
           <button id="addToCart" data-id="">Add to Cart</button>

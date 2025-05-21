@@ -1,31 +1,44 @@
-// wrapper for querySelector...returns matching element
+// Selects a single element from the DOM
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
 
-// retrieve data from local storage
+// Retrieve data from localStorage and parse it
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  try {
+    return JSON.parse(localStorage.getItem(key));
+  } catch (err) {
+    console.error(`Error parsing localStorage item "${key}":`, err);
+    return null;
+  }
 }
 
-// save data to local storage
+// Save JSON data to localStorage
 export function setLocalStorage(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (err) {
+    console.error(`Error setting localStorage item "${key}":`, err);
+  }
 }
 
-// set a listener for both touchend and click
+// Set a click and touchend listener on an element
 export function setClick(selector, callback) {
   const element = qs(selector);
-  if (!element) return;
+  if (!element) {
+    console.warn(`Element not found for selector: ${selector}`);
+    return;
+  }
 
   element.addEventListener("touchend", (event) => {
     event.preventDefault();
     callback();
   });
+
   element.addEventListener("click", callback);
 }
 
-// get the value of a query string parameter by name
+// Get a query string parameter by name from the URL
 export function getParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
