@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   root: "src/",
-  base: "./",
+
   build: {
     outDir: "../dist",
     rollupOptions: {
@@ -24,7 +24,6 @@ export default defineConfig({
           __dirname,
           "src/product_pages/northface-talus-4.html",
         ),
-        productListing: resolve(__dirname, "src/product_listing/index.html"),
       },
     },
   },
