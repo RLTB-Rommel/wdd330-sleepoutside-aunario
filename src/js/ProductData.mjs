@@ -6,16 +6,20 @@ function convertToJson(res) {
   }
 }
 
+const baseUrl = import.meta.env.VITE_SERVER_URL;
+
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `../json/${this.category}.json`;
+    this.path = `${baseUrl}products?category=${this.category}`; // example: /products?category=tents
   }
+
   getData() {
     return fetch(this.path)
       .then(convertToJson)
       .then((data) => data);
   }
+
   async findProductById(id) {
     const products = await this.getData();
     return products.find((item) => item.Id === id);
