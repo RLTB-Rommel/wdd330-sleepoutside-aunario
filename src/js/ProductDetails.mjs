@@ -39,11 +39,19 @@ function productDetailsTemplate(product) {
   productImage.src = product.Image;
   productImage.alt = product.NameWithoutBrand;
 
-  document.getElementById('productPrice').textContent = product.FinalPrice;
+  document.getElementById('productPrice').textContent = `$${product.FinalPrice}`;
   document.getElementById('productColor').textContent = product.Colors[0].ColorName;
   document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
 
   document.getElementById('addToCart').dataset.id = product.Id;
+
+  if (product.FinalPrice < product.SuggestedRetailPrice) {
+    const discountBanner = document.createElement("div");
+    discountBanner.classList.add("discount-banner");
+    discountBanner.textContent = "Discounted!";
+    const titleSection = document.querySelector("h3");
+    titleSection.appendChild(discountBanner);
+  }
 }
 
 // ************* Alternative Display Product Details Method *******************
