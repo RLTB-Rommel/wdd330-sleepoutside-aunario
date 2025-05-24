@@ -39,11 +39,28 @@ function productDetailsTemplate(product) {
   productImage.src = product.Image;
   productImage.alt = product.NameWithoutBrand;
 
-  document.getElementById('productPrice').textContent = product.FinalPrice;
+  document.getElementById('productPrice').textContent = `$${product.FinalPrice}`;
   document.getElementById('productColor').textContent = product.Colors[0].ColorName;
   document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
 
   document.getElementById('addToCart').dataset.id = product.Id;
+
+  // ➕ Discount Indicator Logic with Percentage
+  if (
+    product.SuggestedRetailPrice &&
+    product.FinalPrice < product.SuggestedRetailPrice
+  ) {
+    const discountPercentage = Math.round(
+      ((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100
+    );
+
+    const discountBanner = document.createElement("div");
+    discountBanner.classList.add("discount-banner");
+    discountBanner.innerHTML = `Discounted!<br><span class="discount-percent">Save ${discountPercentage}%</span>`;
+
+    const titleSection = document.querySelector("h3");
+    titleSection.appendChild(discountBanner);
+  }
 }
 
 // ************* Alternative Display Product Details Method *******************
