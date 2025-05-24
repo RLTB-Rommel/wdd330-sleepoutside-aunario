@@ -262,10 +262,18 @@ button {
   background-color: crimson;
   color: white;
   font-size: 0.8rem;
-  padding: 3px 8px;
+  padding: 5px 10px;
   margin-left: 10px;
-  border-radius: 5px;
+  border-radius: 6px;
   font-weight: bold;
+  text-align: center;
+}
+
+.discount-percent {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: normal;
+  margin-top: 2px;
 }
 
 footer {
