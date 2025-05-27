@@ -1,27 +1,22 @@
-function convertToJson(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error("Bad Response");
-  }
-}
-
-const baseUrl = import.meta.env.VITE_SERVER_URL;
-
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `${baseUrl}products?category=${this.category}`; // example: /products?category=tents
+    this.path = `/json/${this.category}.json`; // Load from public/json/
   }
 
-  getData() {
-    return fetch(this.path)
-      .then(convertToJson)
-      .then((data) => data);
+  async getData() {
+    try {
+      const res = await fetch(this.path);
+      if (!res.ok) throw new Error("Bad response");
+      return await res.json();
+    } catch (err) {
+      console.error("Failed to load local JSON:", err);
+      return [];
+    }
   }
 
   async findProductById(id) {
     const products = await this.getData();
-    return products.find((item) => item.Id === id);
+    return products.find(product => product.Id === id);
   }
 }
