@@ -1,7 +1,18 @@
+# macOS system file
 .DS_Store
-.cache
-.vscode
-web_modules
-node_modules
-dist
+
+# VS Code settings
+.vscode/
+
+# Vite cache & build output
+.cache/
+.vite/
+dist/
+
+# Dependencies
+node_modules/
+web_modules/
+
+# Environment variables
 .env
+.env.*
