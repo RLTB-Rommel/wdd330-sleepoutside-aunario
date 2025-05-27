@@ -1,7 +1,6 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
-
   constructor(productId, dataSource) {
     this.productId = productId;
     this.product = {};
@@ -9,12 +8,9 @@ export default class ProductDetails {
   }
 
   async init() {
-    // use the datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
     this.product = await this.dataSource.findProductById(this.productId);
-    // the product details are needed before rendering the HTML
     this.renderProductDetails();
-    // once the HTML is rendered, add a listener to the Add to Cart button
-    // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on 'this' to understand why.
+
     document
       .getElementById('addToCart')
       .addEventListener('click', this.addProductToCart.bind(this));
@@ -32,52 +28,55 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  document.querySelector('h2').textContent = product.Brand.Name;
-  document.querySelector('h3').textContent = product.NameWithoutBrand;
+  document.querySelector('h2').textContent = product.Brand?.Name || "Unknown Brand";
+  document.querySelector('h3').textContent = product.NameWithoutBrand || product.Name;
 
+  // Image
   const productImage = document.getElementById('productImage');
-  productImage.src = product.Image;
-  productImage.alt = product.NameWithoutBrand;
+  productImage.src = product.Image || "/images/default.jpg";
+  productImage.alt = product.NameWithoutBrand || "Product Image";
 
-  document.getElementById('productPrice').textContent = `$${product.FinalPrice}`;
-  document.getElementById('productColor').textContent = product.Colors[0].ColorName;
-  document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
+  // Pricing and Discount
+  const priceElement = document.getElementById('productPrice');
+  priceElement.innerHTML = ""; // Clear previous content
 
-  document.getElementById('addToCart').dataset.id = product.Id;
+  const originalPrice = parseFloat(product.SuggestedRetailPrice);
+  const finalPrice = parseFloat(product.FinalPrice);
 
-  // ➕ Discount Indicator Logic with Percentage
-  if (
-    product.SuggestedRetailPrice &&
-    product.FinalPrice < product.SuggestedRetailPrice
-  ) {
+  if (!isNaN(originalPrice) && !isNaN(finalPrice) && finalPrice < originalPrice) {
     const discountPercentage = Math.round(
-      ((product.SuggestedRetailPrice - product.FinalPrice) / product.SuggestedRetailPrice) * 100
+      ((originalPrice - finalPrice) / originalPrice) * 100
     );
 
-    const discountBanner = document.createElement("div");
-    discountBanner.classList.add("discount-banner");
-    discountBanner.innerHTML = `Discounted!<br><span class="discount-percent">Save ${discountPercentage}%</span>`;
+    const original = document.createElement("span");
+    original.textContent = `$${originalPrice.toFixed(2)}`;
+    original.style.textDecoration = "line-through";
+    original.style.marginRight = "8px";
 
-    const titleSection = document.querySelector("h3");
-    titleSection.appendChild(discountBanner);
+    const discounted = document.createElement("span");
+    discounted.textContent = `$${finalPrice.toFixed(2)}`;
+    discounted.style.color = "green";
+    discounted.style.fontWeight = "bold";
+
+    const label = document.createElement("p");
+    label.textContent = `Discounted! Save ${discountPercentage}%`;
+    label.style.color = "red";
+    label.style.fontStyle = "italic";
+    label.style.marginTop = "4px";
+
+    priceElement.appendChild(original);
+    priceElement.appendChild(discounted);
+    priceElement.appendChild(label);
+  } else {
+    priceElement.textContent = `$${finalPrice.toFixed(2)}`;
   }
-}
 
-// ************* Alternative Display Product Details Method *******************
-// function productDetailsTemplate(product) {
-//   return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
-//     <h2 class="divider">${product.NameWithoutBrand}</h2>
-//     <img
-//       class="divider"
-//       src="${product.Image}"
-//       alt="${product.NameWithoutBrand}"
-//     />
-//     <p class="product-card__price">$${product.FinalPrice}</p>
-//     <p class="product__color">${product.Colors[0].ColorName}</p>
-//     <p class="product__description">
-//     ${product.DescriptionHtmlSimple}
-//     </p>
-//     <div class="product-detail__add">
-//       <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-//     </div></section>`;
-// }
+  // Color
+  document.getElementById('productColor').textContent = product.Colors?.[0]?.ColorName || "N/A";
+
+  // Description
+  document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple || "No description available.";
+
+  // Add to Cart button
+  document.getElementById('addToCart').dataset.id = product.Id;
+}
