@@ -9,6 +9,7 @@ export default class ProductDetails {
 
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
+    console.log("Loaded product:", this.product);
     this.renderProductDetails();
 
     document
