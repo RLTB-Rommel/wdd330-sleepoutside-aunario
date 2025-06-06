@@ -22,7 +22,7 @@ async function loadProduct(productID) {
 
   // Product not found
   document.querySelector("main").innerHTML = `
-    <h2>❌ Product Not Found</h2>
+    <h2>Product Not Found</h2>
     <p>No product matches ID <strong>${productID}</strong>.</p>
   `;
 }
