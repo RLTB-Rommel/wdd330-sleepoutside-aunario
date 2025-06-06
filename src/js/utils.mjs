@@ -2,8 +2,6 @@
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
@@ -32,9 +30,35 @@ export function getParam(param) {
 
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
   const htmlStrings = list.map(template);
-  // if clear is true we need to clear out the contents of the parent.
+  // if clear is true, clear out the contents of the parent.
   if (clear) {
     parentElement.innerHTML = "";
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function loadHeaderFooter() {
+  const header = document.querySelector("header");
+  const footer = document.querySelector("footer");
+
+  fetch("/partials/header.html")
+    .then((res) => {
+      if (!res.ok) throw new Error("Header fetch failed");
+      return res.text();
+    })
+    .then((html) => {
+      if (header) header.innerHTML = html;
+    })
+    .catch((err) => console.warn("[Header Error]", err.message));
+
+  fetch("/partials/footer.html")
+    .then((res) => {
+      if (!res.ok) throw new Error("Footer fetch failed");
+      return res.text();
+    })
+    .then((html) => {
+      if (footer) footer.innerHTML = html;
+    })
+    .catch((err) => console.warn("[Footer Error]", err.message));
+}
+

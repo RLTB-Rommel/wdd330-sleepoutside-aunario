@@ -1,5 +1,6 @@
 import { getParam } from "./utils.mjs";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from './ExternalServices.mjs';
+const ProductData = ExternalServices;
 import ProductDetails from "./ProductDetails.mjs";
 
 const productID = getParam("product");
@@ -22,7 +23,7 @@ async function loadProduct(productID) {
 
   // Product not found
   document.querySelector("main").innerHTML = `
-    <h2>❌ Product Not Found</h2>
+    <h2>Product Not Found</h2>
     <p>No product matches ID <strong>${productID}</strong>.</p>
   `;
 }
