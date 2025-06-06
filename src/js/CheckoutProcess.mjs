@@ -21,15 +21,9 @@ export default class CheckoutProcess {
   }
 
   displayOrderSummary() {
-    if (!this.list || this.list.length === 0) {
-      console.warn("Cart is empty or not loaded.");
-      return;
-    }
+    if (!this.list.length) return;
 
-    const subtotal = this.list.reduce(
-      (acc, item) => acc + (parseFloat(item.FinalPrice) * (item.quantity || 1)),
-      0
-    );
+    const subtotal = this.list.reduce((acc, item) => acc + item.FinalPrice * (item.quantity || 1), 0);
     const tax = subtotal * taxRate;
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
@@ -69,12 +63,9 @@ export default class CheckoutProcess {
     try {
       const response = await this.services.checkout(order);
       console.log("Order submitted:", response);
-
-      // Redirect to success page after successful checkout
       window.location.href = "./success.html";
     } catch (err) {
       console.error("Checkout failed:", err);
-      alert("Checkout failed. Please try again.");
     }
   }
 }
