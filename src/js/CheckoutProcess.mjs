@@ -8,7 +8,7 @@ function packageItems(items) {
     id: item.Id,
     name: item.Name,
     price: item.FinalPrice,
-    quantity: item.quantity
+    quantity: item.quantity || 1
   }));
 }
 
@@ -16,12 +16,20 @@ export default class CheckoutProcess {
   constructor(key, outputSelector) {
     this.key = key;
     this.outputSelector = outputSelector;
-    this.list = getLocalStorage(key);
+    this.list = getLocalStorage(key) || [];
     this.services = new ExternalServices();
   }
 
   displayOrderSummary() {
-    const subtotal = this.list.reduce((acc, item) => acc + item.FinalPrice * item.quantity, 0);
+    if (!this.list || this.list.length === 0) {
+      console.warn("Cart is empty or not loaded.");
+      return;
+    }
+
+    const subtotal = this.list.reduce(
+      (acc, item) => acc + (parseFloat(item.FinalPrice) * (item.quantity || 1)),
+      0
+    );
     const tax = subtotal * taxRate;
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
@@ -61,6 +69,7 @@ export default class CheckoutProcess {
     try {
       const response = await this.services.checkout(order);
       console.log("Order submitted:", response);
+      // Optional: redirect or show success message
     } catch (err) {
       console.error("Checkout failed:", err);
     }
