@@ -20,31 +20,26 @@ export default class CheckoutProcess {
     this.services = new ExternalServices();
   }
 
+  init() {
+    this.displayOrderSummary();
+  }
+
   displayOrderSummary() {
-    if (!this.list || this.list.length === 0) {
-      console.warn("Cart is empty or not loaded.");
-      return;
-    }
+    if (!this.list.length) return;
 
-    console.log("Cart List:", this.list); // 🔍 Debug
-
-    const subtotal = this.list.reduce((acc, item) => {
-      const price = parseFloat(item.FinalPrice) || 0;
-      const qty = item.quantity || 1;
-      return acc + price * qty;
-    }, 0);
-
+    const subtotal = this.list.reduce(
+      (acc, item) => acc + item.FinalPrice * (item.quantity || 1),
+      0
+    );
     const tax = subtotal * taxRate;
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
 
-    // Update DOM
     document.querySelector(`${this.outputSelector} .subtotal`).textContent = `$${subtotal.toFixed(2)}`;
     document.querySelector(`${this.outputSelector} .tax`).textContent = `$${tax.toFixed(2)}`;
     document.querySelector(`${this.outputSelector} .shipping`).textContent = `$${shipping.toFixed(2)}`;
     document.querySelector(`${this.outputSelector} .order-total`).textContent = `$${orderTotal.toFixed(2)}`;
 
-    // Save for checkout
     this.subtotal = subtotal;
     this.tax = tax;
     this.shipping = shipping;
@@ -74,10 +69,7 @@ export default class CheckoutProcess {
 
     try {
       const response = await this.services.checkout(order);
-      console.log("Order submitted successfully:", response);
-
-      // Optional: clear cart and redirect
-      localStorage.removeItem(this.key);
+      console.log("Order submitted:", response);
       window.location.href = "./success.html";
     } catch (err) {
       console.error("Checkout failed:", err);
