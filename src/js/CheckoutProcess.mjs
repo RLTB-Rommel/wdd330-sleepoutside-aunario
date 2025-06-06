@@ -70,7 +70,7 @@ export default class CheckoutProcess {
       const response = await this.services.checkout(order);
       console.log("Order submitted:", response);
 
-      // ✅ Redirect to success page after successful checkout
+      // Redirect to success page after successful checkout
       window.location.href = "./success.html";
     } catch (err) {
       console.error("Checkout failed:", err);
