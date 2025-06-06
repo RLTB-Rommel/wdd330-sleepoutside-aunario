@@ -299,67 +299,6 @@ button {
   margin: 0 auto;
 }
 
-form {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1rem;
-  border: 1px solid var(--light-grey);
-  border-radius: 6px;
-  background-color: #fff;
-}
-
-form fieldset {
-  margin-bottom: 1rem;
-  border: 1px solid var(--light-grey);
-  padding: 1rem;
-  border-radius: 4px;
-}
-
-form legend {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  font-size: 1.1em;
-}
-
-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-form input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0.75rem;
-  border: 1px solid var(--light-grey);
-  border-radius: 4px;
-}
-
-.order-summary {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1rem;
-  border: 2px solid var(--secondary-color);
-  border-radius: 6px;
-  background-color: #f9f9f9;
-}
-
-.order-summary ul {
-  list-style: none;
-  padding: 0;
-}
-
-.order-summary li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.75rem;
-}
-
-.order-summary .order-total {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
 footer {
   font-size: var(--small-font);
   padding: 1em;
