@@ -7,23 +7,19 @@ function packageItems(items) {
   return items.map(item => ({
     id: item.Id,
     name: item.Name,
-    price: parseFloat(item.FinalPrice),
+    price: item.FinalPrice,
     quantity: item.quantity || 1
   }));
 }
 
 export default class CheckoutProcess {
-  constructor(key, outputSelector) {
+  constructor(key) {
     this.key = key;
-    this.outputSelector = outputSelector;
     this.list = getLocalStorage(key) || [];
     this.services = new ExternalServices();
   }
 
-  init() {
-    this.displayOrderSummary();
-  }
-
+  // 👇 This is the method you're asking about
   displayOrderSummary() {
     if (!this.list.length) return;
 
@@ -35,10 +31,11 @@ export default class CheckoutProcess {
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
 
-    document.querySelector(`${this.outputSelector} .subtotal`).textContent = `$${subtotal.toFixed(2)}`;
-    document.querySelector(`${this.outputSelector} .tax`).textContent = `$${tax.toFixed(2)}`;
-    document.querySelector(`${this.outputSelector} .shipping`).textContent = `$${shipping.toFixed(2)}`;
-    document.querySelector(`${this.outputSelector} .order-total`).textContent = `$${orderTotal.toFixed(2)}`;
+    // ✅ These must match the class names in your HTML
+    document.querySelector(".subtotal").textContent = `$${subtotal.toFixed(2)}`;
+    document.querySelector(".tax").textContent = `$${tax.toFixed(2)}`;
+    document.querySelector(".shipping").textContent = `$${shipping.toFixed(2)}`;
+    document.querySelector(".order-total").textContent = `$${orderTotal.toFixed(2)}`;
 
     this.subtotal = subtotal;
     this.tax = tax;
