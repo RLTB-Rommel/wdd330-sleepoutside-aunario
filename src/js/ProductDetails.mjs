@@ -19,7 +19,20 @@ export default class ProductDetails {
 
   addProductToCart() {
     const cartItems = getLocalStorage("so-cart") || [];
-    cartItems.push(this.product);
+    const existingIndex = cartItems.findIndex(item => item.Id === this.product.Id);
+
+    if (existingIndex > -1) {
+      // If product is already in the cart, increase the quantity
+      cartItems[existingIndex].quantity += 1;
+    } else {
+      // If not, add new product with quantity 1
+      const productToAdd = {
+        ...this.product,
+        quantity: 1
+      };
+      cartItems.push(productToAdd);
+    }
+
     setLocalStorage("so-cart", cartItems);
   }
 
@@ -73,10 +86,12 @@ function productDetailsTemplate(product) {
   }
 
   // Color
-  document.getElementById('productColor').textContent = product.Colors?.[0]?.ColorName || "N/A";
+  document.getElementById('productColor').textContent =
+    product.Colors?.[0]?.ColorName || "N/A";
 
   // Description
-  document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple || "No description available.";
+  document.getElementById('productDesc').innerHTML =
+    product.DescriptionHtmlSimple || "No description available.";
 
   // Add to Cart button
   document.getElementById('addToCart').dataset.id = product.Id;
