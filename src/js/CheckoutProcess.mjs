@@ -19,7 +19,10 @@ export default class CheckoutProcess {
     this.services = new ExternalServices();
   }
 
-  // 👇 This is the method you're asking about
+  init() {
+    this.displayOrderSummary();
+  }
+
   displayOrderSummary() {
     if (!this.list.length) return;
 
@@ -31,11 +34,16 @@ export default class CheckoutProcess {
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
 
-    // ✅ These must match the class names in your HTML
-    document.querySelector(".subtotal").textContent = `$${subtotal.toFixed(2)}`;
-    document.querySelector(".tax").textContent = `$${tax.toFixed(2)}`;
-    document.querySelector(".shipping").textContent = `$${shipping.toFixed(2)}`;
-    document.querySelector(".order-total").textContent = `$${orderTotal.toFixed(2)}`;
+    // Check for element existence before trying to set textContent
+    const subtotalElem = document.querySelector(".subtotal");
+    const taxElem = document.querySelector(".tax");
+    const shippingElem = document.querySelector(".shipping");
+    const orderTotalElem = document.querySelector(".order-total");
+
+    if (subtotalElem) subtotalElem.textContent = `$${subtotal.toFixed(2)}`;
+    if (taxElem) taxElem.textContent = `$${tax.toFixed(2)}`;
+    if (shippingElem) shippingElem.textContent = `$${shipping.toFixed(2)}`;
+    if (orderTotalElem) orderTotalElem.textContent = `$${orderTotal.toFixed(2)}`;
 
     this.subtotal = subtotal;
     this.tax = tax;
