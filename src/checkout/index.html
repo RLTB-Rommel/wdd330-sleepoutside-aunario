@@ -1,96 +1,65 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sleep Outside | Checkout</title>
-  <link rel="stylesheet" href="../css/style.css" />
-</head>
-<body>
-  <!-- Header -->
-  <header class="divider">
-    <div class="logo">
-      <img src="../images/noun_Tent_2517.svg" alt="tent image for logo" />
-      <a href="../index.html">
-        Sleep <span class="highlight">Outside</span>
-      </a>
-    </div>
-    <div class="cart">
-      <a href="../cart/">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-          <path d="/images/cart-icon.svg" />
-        </svg>
-      </a>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sleep Outside | Checkout</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script type="module" src="../js/checkout.js"></script>
+  </head>
 
-  <!-- Main Content -->
-  <main class="divider">
-    <section class="products">
-      <h2>Review & Place your Order</h2>
+  <body>
+    <header class="divider" id="main-header"></header>
 
-      <!-- ✅ Checkout Form -->
-      <form id="checkout-form" name="checkout">
-        <fieldset>
-          <legend>Customer Information</legend>
-          <label>First Name: <input type="text" name="fname" required /></label>
-          <label>Last Name: <input type="text" name="lname" required /></label>
-          <label>Street Address: <input type="text" name="street" required /></label>
-          <label>City: <input type="text" name="city" required /></label>
-          <label>State: <input type="text" name="state" required /></label>
-          <label>Zip Code: <input type="text" name="zip" required /></label>
-        </fieldset>
+    <main class="divider">
+      <section class="products">
+        <h2>Review & Place your Order</h2>
 
-        <fieldset>
-          <legend>Payment Information</legend>
-          <label>Card Number: <input type="text" name="cardNumber" required value="1234123412341234" /></label>
-          <label>Expiration Date: <input type="text" name="expiration" required value="12/26" /></label>
-          <label>Security Code: <input type="text" name="code" required value="123" /></label>
-        </fieldset>
+        <form id="checkout-form" name="checkout">
+          <fieldset>
+            <legend>Customer Information</legend>
+            <label>First Name: <input type="text" name="fname" required /></label>
+            <label>Last Name: <input type="text" name="lname" required /></label>
+            <label>Street Address: <input type="text" name="street" required /></label>
+            <label>City: <input type="text" name="city" required /></label>
+            <label>State: <input type="text" name="state" required /></label>
+            <label>Zip Code: <input type="text" name="zip" required /></label>
+          </fieldset>
 
-        <button type="submit">Place Order</button>
-      </form>
+          <fieldset>
+            <legend>Payment Information</legend>
+            <label>Card Number: <input type="text" name="cardNumber" required value="1234123412341234" /></label>
+            <label>Expiration Date: <input type="text" name="expiration" required value="12/26" /></label>
+            <label>Security Code: <input type="text" name="code" required value="123" /></label>
+          </fieldset>
 
-      <!-- ✅ Order Summary -->
-      <fieldset class="order-summary">
-        <legend>Order Summary</legend>
-        <ul>
-          <li>
-            <label>Item Subtotal:</label>
-            <p class="subtotal">$0.00</p>
-          </li>
-          <li>
-            <label>Shipping Estimate:</label>
-            <p class="shipping">$0.00</p>
-          </li>
-          <li>
-            <label>Tax:</label>
-            <p class="tax">$0.00</p>
-          </li>
-          <li>
-            <label><strong>Order Total:</strong></label>
-            <p class="order-total">$0.00</p>
-          </li>
-        </ul>
-      </fieldset>
-    </section>
-  </main>
+          <fieldset class="order-summary">
+            <legend>Order Summary</legend>
+            <ul>
+              <li>
+                <label>Item Subtotal:</label>
+                <p class="subtotal">$0.00</p>
+              </li>
+              <li>
+                <label>Shipping Estimate:</label>
+                <p class="shipping">$0.00</p>
+              </li>
+              <li>
+                <label>Tax:</label>
+                <p class="tax">$0.00</p>
+              </li>
+              <li>
+                <label><strong>Order Total:</strong></label>
+                <p class="order-total">$0.00</p>
+              </li>
+            </ul>
+          </fieldset>
 
-  <!-- Footer -->
-  <footer>
-    &copy;2025 ⛺ SleepOutside ⛺ WDD 330 ⛺ BYU-Idaho for BYU-Pathway Worldwide Online
-  </footer>
+          <button type="submit" id="checkoutSubmit">Place Order</button>
+        </form>
+      </section>
+    </main>
 
-  <!-- Checkout Script -->
-  <script type="module">
-    import CheckoutProcess from "../js/CheckoutProcess.mjs";
-    const checkout = new CheckoutProcess("so-cart", ".order-summary");
-    checkout.displayOrderSummary();
-
-    document.getElementById("checkout-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      checkout.checkout(e.target);
-    });
-  </script>
-</body>
+    <footer id="main-footer"></footer>
+  </body>
 </html>
