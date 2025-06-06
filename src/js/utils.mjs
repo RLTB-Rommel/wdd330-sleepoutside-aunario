@@ -42,15 +42,23 @@ export function loadHeaderFooter() {
   const footer = document.querySelector("footer");
 
   fetch("/partials/header.html")
-    .then((res) => res.text())
+    .then((res) => {
+      if (!res.ok) throw new Error("Header fetch failed");
+      return res.text();
+    })
     .then((html) => {
       if (header) header.innerHTML = html;
-    });
+    })
+    .catch((err) => console.warn("[Header Error]", err.message));
 
   fetch("/partials/footer.html")
-    .then((res) => res.text())
+    .then((res) => {
+      if (!res.ok) throw new Error("Footer fetch failed");
+      return res.text();
+    })
     .then((html) => {
       if (footer) footer.innerHTML = html;
-    });
+    })
+    .catch((err) => console.warn("[Footer Error]", err.message));
 }
 
