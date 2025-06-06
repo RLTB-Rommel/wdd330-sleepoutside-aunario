@@ -1,36 +1,44 @@
-const baseURL = "http://server-nodejs.cit.byui.edu:3000/";
-async function convertToJson(res) {
-  const data = await res.json();
-  if (res.ok) {
-    return data;
-  } else {
-    throw { name: "servicesError", message: data };
-  }
-}
-
 export default class ExternalServices {
   constructor(category) {
-    // this.category = category;
-    // this.path = `../json/${this.category}.json`;
+    this.category = category;
+    this.path = `/json/${this.category}.json`; // Load from public/json/
   }
-  async getData(category) {
-    const response = await fetch(baseURL + `products/search/${category}`);
-    const data = await convertToJson(response);
-    return data.Result;
+
+  async getData() {
+    try {
+      const res = await fetch(this.path);
+      if (!res.ok) throw new Error("Bad response");
+      return await res.json();
+    } catch (err) {
+      console.error("Failed to load local JSON:", err);
+      return [];
+    }
   }
+
   async findProductById(id) {
-    const response = await fetch(baseURL + `product/${id}`);
-    const data = await convertToJson(response);
-    return data.Result;
+    const products = await this.getData();
+    return products.find(product => product.Id === id);
   }
-  async checkout(payload) {
+
+  async checkout(order) {
+    const url = 'https://wdd330-backend.onrender.com:3000/checkout';
     const options = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(order)
     };
-    return await fetch(baseURL + "checkout/", options).then(convertToJson);
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Checkout failed: " + response.statusText);
+      }
+      return await response.json();
+    } catch (err) {
+      console.error("Checkout error:", err);
+      throw err;
+    }
   }
 }
