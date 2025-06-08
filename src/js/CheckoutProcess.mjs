@@ -13,26 +13,28 @@ function packageItems(items) {
 }
 
 function isExpiredCard(expiration) {
-  // Enforce MM/YY format (2 digits / 2 digits only)
+  // Match exactly MM/YY using 2 digits each
   const regex = /^\d{2}\/\d{2}$/;
 
   if (!regex.test(expiration)) {
-    alertMessage("Invalid expiration format. Use MM/YY (e.g., 12/26).");
+    alertMessage("❌ Invalid expiration format. Use MM/YY (e.g., 12/26).");
     return true;
   }
 
-  const [month, year] = expiration.split("/").map(Number);
+  const [monthStr, yearStr] = expiration.split("/");
+  const month = parseInt(monthStr, 10);
+  const year = parseInt(yearStr, 10);
 
-  if (isNaN(month) || isNaN(year) || month < 1 || month > 12) {
-    alertMessage("Invalid expiration date. Check the month and year.");
+  if (month < 1 || month > 12) {
+    alertMessage("❌ Invalid expiration month.");
     return true;
   }
 
-  const expiryDate = new Date(`20${year}`, month); // First of the next month
+  const expiryDate = new Date(`20${year}`, month); // First day of the next month
   const now = new Date();
 
   if (now >= expiryDate) {
-    alertMessage("Card is expired. Please use a valid expiration date.");
+    alertMessage("❌ Card is expired. Please enter a valid expiration date.");
     return true;
   }
 
