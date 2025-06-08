@@ -40,7 +40,7 @@ function isValidCardNumber(number) {
   const sanitized = number.replace(/[\s-]/g, "");
 
   if (!/^\d{13,19}$/.test(sanitized)) {
-    alertMessage("❌ Invalid card number. Must be 13–19 digits.");
+    alertMessage("Invalid card number. Must be 13–19 digits.");
     return false;
   }
 
@@ -58,7 +58,7 @@ function isValidCardNumber(number) {
   }
 
   if (sum % 10 !== 0) {
-    alertMessage("❌ Invalid card number. Please double-check.");
+    alertMessage("Invalid card number. Please double-check.");
     return false;
   }
 
