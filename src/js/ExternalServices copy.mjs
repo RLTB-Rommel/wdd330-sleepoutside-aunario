@@ -1,13 +1,3 @@
-async function convertToJson(res) {
-  const jsonResponse = await res.json();
-  if (res.ok) {
-    return jsonResponse;
-  } else {
-    // Send detailed error object for handling in CheckoutProcess
-    throw { name: 'servicesError', message: jsonResponse };
-  }
-}
-
 export default class ExternalServices {
   constructor(category) {
     this.category = category;
@@ -17,7 +7,8 @@ export default class ExternalServices {
   async getData() {
     try {
       const res = await fetch(this.path);
-      return await convertToJson(res);
+      if (!res.ok) throw new Error("Bad response");
+      return await res.json();
     } catch (err) {
       console.error("Failed to load local JSON:", err);
       return [];
@@ -41,7 +32,10 @@ export default class ExternalServices {
 
     try {
       const response = await fetch(url, options);
-      return await convertToJson(response);
+      if (!response.ok) {
+        throw new Error("Checkout failed: " + response.statusText);
+      }
+      return await response.json();
     } catch (err) {
       console.error("Checkout error:", err);
       throw err;

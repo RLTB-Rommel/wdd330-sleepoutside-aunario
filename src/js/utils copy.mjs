@@ -7,12 +7,10 @@ export function qs(selector, parent = document) {
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -27,7 +25,7 @@ export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const product = urlParams.get(param);
-  return product;
+  return product
 }
 
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
@@ -64,23 +62,3 @@ export function loadHeaderFooter() {
     .catch((err) => console.warn("[Footer Error]", err.message));
 }
 
-// Alert message for user feedback
-export function alertMessage(message, scroll = true) {
-  const alert = document.createElement("div");
-  alert.classList.add("alert");
-  alert.innerHTML = `<span>${message}</span><span class="close-btn" style="float:right;cursor:pointer;">✖</span>`;
-
-  // Dismiss alert on click
-  alert.addEventListener("click", function (e) {
-    if (e.target.classList.contains("close-btn") || e.target.innerText === "✖") {
-      alert.remove();
-    }
-  });
-
-  const main = document.querySelector("main");
-  main.prepend(alert);
-
-  if (scroll) {
-    window.scrollTo(0, 0);
-  }
-}
