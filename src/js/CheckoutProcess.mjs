@@ -124,7 +124,6 @@ async checkout(form) {
     return;
   }
 
-
   const order = {
     orderDate: new Date().toISOString(),
     fname: data.fname,
@@ -133,7 +132,8 @@ async checkout(form) {
     city: data.city,
     state: data.state,
     zip: data.zip,
-    cardNumber: data.cardNumber,
+    //cardNumber: data.cardNumber,
+    cardNumber: 1234123412341234,
     expiration: data.expiration,
     code: data.code,
     items: packageItems(this.list),
