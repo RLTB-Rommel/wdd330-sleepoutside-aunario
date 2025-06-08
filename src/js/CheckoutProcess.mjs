@@ -120,8 +120,18 @@ async checkout(form) {
   }
 
   // Validate card number
-   if (!isValidCardNumber(data.cardNumber)) {
-    return;
+  //if (!isValidCardNumber(data.cardNumber)) {
+  //return;
+  //}
+
+  if (data.cardNumber !== "1234123412341234") {
+  alertMessage("Invalid card number. Please use 1234123412341234.");
+  return;
+  }
+
+  if (data.code !== "123") {
+  alertMessage("Invalid security code. Please use 123.");
+  return;
   }
 
   const order = {
