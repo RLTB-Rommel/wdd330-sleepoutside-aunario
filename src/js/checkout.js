@@ -8,8 +8,16 @@ loadHeaderFooter();
 const myCheckout = new CheckoutProcess("so-cart");
 myCheckout.init();
 
-// Use form 'submit' event for placing the order
-document.forms["checkout"].addEventListener("submit", (e) => {
+// Enhanced submit handling with manual validity check
+const form = document.forms["checkout"];
+
+form.addEventListener("submit", (e) => {
   e.preventDefault();
-  myCheckout.checkout(e.target); // Pass the form to checkout
+
+  const isValid = form.checkValidity();
+  form.reportValidity();
+
+  if (isValid) {
+    myCheckout.checkout(form);
+  }
 });
