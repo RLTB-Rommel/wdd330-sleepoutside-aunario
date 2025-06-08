@@ -113,10 +113,17 @@ async checkout(form) {
     return; // stop processing
   }
 
+    // Validate CVV
+  if (!/^\d{3,4}$/.test(data.code)) {
+  alertMessage("Invalid security code. Must be 3 or 4 digits.");
+  return;
+  }
+
   // Validate card number
    if (!isValidCardNumber(data.cardNumber)) {
     return;
   }
+
 
   const order = {
     orderDate: new Date().toISOString(),
