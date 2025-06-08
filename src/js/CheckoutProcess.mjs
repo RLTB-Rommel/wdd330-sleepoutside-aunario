@@ -1,5 +1,5 @@
 import ExternalServices from "./ExternalServices.mjs";
-import { getLocalStorage, alertMessage } from "./utils.mjs";
+import { getLocalStorage } from "./utils.mjs";
 
 const taxRate = 0.06;
 
