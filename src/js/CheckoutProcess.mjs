@@ -1,5 +1,5 @@
 import ExternalServices from "./ExternalServices.mjs";
-import { getLocalStorage, alertMessage } from "./utils.mjs";
+import { getLocalStorage } from "./utils.mjs";
 
 const taxRate = 0.06;
 
@@ -34,6 +34,7 @@ export default class CheckoutProcess {
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
 
+    // Check for element existence before trying to set textContent
     const subtotalElem = document.querySelector(".subtotal");
     const taxElem = document.querySelector(".tax");
     const shippingElem = document.querySelector(".shipping");
@@ -74,15 +75,9 @@ export default class CheckoutProcess {
     try {
       const response = await this.services.checkout(order);
       console.log("Order submitted:", response);
-      localStorage.removeItem("so-cart");
       window.location.href = "./success.html";
     } catch (err) {
       console.error("Checkout failed:", err);
-      if (err.name === "servicesError") {
-        alertMessage(err.message.message || "An error occurred during checkout.");
-      } else {
-        alertMessage("Unexpected error. Please try again.");
-      }
     }
   }
 }
