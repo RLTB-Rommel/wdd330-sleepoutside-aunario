@@ -36,6 +36,40 @@ export function isExpiredCard(expiration) {
   return false;
 }
 
+export function isValidCardNumber(number) {
+  // Remove spaces or dashes
+  const sanitized = number.replace(/[\s-]/g, "");
+
+  // Check if it's all digits and 13 to 19 digits long
+  if (!/^\d{13,19}$/.test(sanitized)) {
+    alertMessage("Invalid card number. Must be 13–19 digits.");
+    return false;
+  }
+
+  // Luhn algorithm
+  let sum = 0;
+  let shouldDouble = false;
+
+  for (let i = sanitized.length - 1; i >= 0; i--) {
+    let digit = parseInt(sanitized[i]);
+
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) digit -= 9;
+    }
+
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+
+  if (sum % 10 !== 0) {
+    alertMessage("Invalid card number. Please double-check.");
+    return false;
+  }
+
+  return true;
+}
+
 export default class CheckoutProcess {
   constructor(key) {
     this.key = key;
