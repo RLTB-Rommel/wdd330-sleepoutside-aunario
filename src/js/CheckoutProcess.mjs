@@ -1,15 +1,26 @@
 import ExternalServices from "./ExternalServices.mjs";
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, alertMessage } from "./utils.mjs";
 
 const taxRate = 0.06;
 
 function packageItems(items) {
   return items.map(item => ({
-    id: item.Id,
-    name: item.Name,
-    price: item.FinalPrice,
+    id: item.Id || item.id,
+    name: item.Name || item.name,
+    price: item.FinalPrice ?? item.finalPrice ?? item.price ?? 0,
     quantity: item.quantity || 1
   }));
+}
+
+function isExpiredCard(expiration) {
+  // Expecting format MM/YY
+  const [month, year] = expiration.split("/").map(Number);
+  if (!month || !year || month < 1 || month > 12) return true;
+
+  const expiryDate = new Date(`20${year}`, month); // first day of next month
+  const now = new Date();
+
+  return now >= expiryDate;
 }
 
 export default class CheckoutProcess {
@@ -26,15 +37,15 @@ export default class CheckoutProcess {
   displayOrderSummary() {
     if (!this.list.length) return;
 
-    const subtotal = this.list.reduce(
-      (acc, item) => acc + item.FinalPrice * (item.quantity || 1),
-      0
-    );
+    const subtotal = this.list.reduce((acc, item) => {
+      const price = item.FinalPrice ?? item.finalPrice ?? item.price ?? 0;
+      return acc + price * (item.quantity || 1);
+    }, 0);
+
     const tax = subtotal * taxRate;
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
 
-    // Check for element existence before trying to set textContent
     const subtotalElem = document.querySelector(".subtotal");
     const taxElem = document.querySelector(".tax");
     const shippingElem = document.querySelector(".shipping");
@@ -54,6 +65,11 @@ export default class CheckoutProcess {
   async checkout(form) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+
+    if (isExpiredCard(data.expiration)) {
+      alertMessage("Card is expired. Please enter a valid expiration date.");
+      return;
+    }
 
     const order = {
       orderDate: new Date().toISOString(),
@@ -75,9 +91,18 @@ export default class CheckoutProcess {
     try {
       const response = await this.services.checkout(order);
       console.log("Order submitted:", response);
+
+      // Save order data to sessionStorage
+      sessionStorage.setItem("recent-order", JSON.stringify(order));
+
+      // Clear cart and reset form
+      localStorage.removeItem(this.key);
+      form.reset();
+
       window.location.href = "./success.html";
     } catch (err) {
       console.error("Checkout failed:", err);
+      alertMessage("Checkout failed. Please check your inputs or try again later.");
     }
   }
 }
