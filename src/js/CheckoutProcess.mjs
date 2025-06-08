@@ -11,7 +11,16 @@ function packageItems(items) {
     quantity: item.quantity || 1
   }));
 }
+function isExpiredCard(expiration) {
+  // Expecting format MM/YY
+  const [month, year] = expiration.split("/").map(str => parseInt(str));
+  if (!month || !year || month < 1 || month > 12) return true;
 
+  const expiryDate = new Date(`20${year}`, month); // First of the next month
+  const now = new Date();
+
+  return now >= expiryDate;
+}
 export default class CheckoutProcess {
   constructor(key) {
     this.key = key;
