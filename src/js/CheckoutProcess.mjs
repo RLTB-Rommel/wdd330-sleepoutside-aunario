@@ -133,7 +133,7 @@ async checkout(form) {
     state: data.state,
     zip: data.zip,
     //cardNumber: data.cardNumber,
-    cardNumber: 1234123412341234,
+    cardNumber: 4111111111111111,
     expiration: data.expiration,
     code: data.code,
     items: packageItems(this.list),
