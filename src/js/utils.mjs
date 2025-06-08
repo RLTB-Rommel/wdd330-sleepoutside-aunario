@@ -77,8 +77,9 @@ export function alertMessage(message, scroll = true) {
     }
   });
 
-  const main = document.querySelector("main");
-  main.prepend(alert);
+  // Insert alert into #alert-container if it exists, else into <main>
+  const container = document.getElementById("alert-container") || document.querySelector("main");
+  container.prepend(alert);
 
   if (scroll) {
     window.scrollTo(0, 0);

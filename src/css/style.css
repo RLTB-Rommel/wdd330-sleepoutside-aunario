@@ -337,3 +337,7 @@ footer {
     transform: translateY(0);
   }
 }
+
+#alert-container {
+  margin-bottom: 1rem;
+}
