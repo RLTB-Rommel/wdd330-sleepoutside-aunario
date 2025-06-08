@@ -11,16 +11,18 @@ function packageItems(items) {
     quantity: item.quantity || 1
   }));
 }
+
 function isExpiredCard(expiration) {
-  // Must match MM/YY format exactly (2 digits + slash + 2 digits)
+  // Must match MM/YY format
   const regex = /^\d{2}\/\d{2}$/;
   if (!regex.test(expiration)) return true;
 
   const [month, year] = expiration.split("/").map(Number);
   if (month < 1 || month > 12) return true;
 
-  const expiryDate = new Date(`20${year}`, month); // 1st of next month
+  const expiryDate = new Date(`20${year}`, month); // First day of next month
   const now = new Date();
+
   return now >= expiryDate;
 }
 
