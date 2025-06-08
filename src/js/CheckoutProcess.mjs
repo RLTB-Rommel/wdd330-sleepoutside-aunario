@@ -113,6 +113,11 @@ async checkout(form) {
     return; // stop processing
   }
 
+  // Validate card number
+   if (!isValidCardNumber(data.cardNumber)) {
+    return;
+  }
+
   const order = {
     orderDate: new Date().toISOString(),
     fname: data.fname,
