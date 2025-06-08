@@ -303,37 +303,3 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
-
-/* Alert message styling */
-.alert {
-  background-color: var(--tertiary-color);
-  color: white;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 6px;
-  font-size: 1em;
-  position: relative;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.alert .close-btn {
-  position: absolute;
-  right: 1rem;
-  top: 0.8rem;
-  font-size: 1.2em;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* Optional animation for smooth appearance */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
