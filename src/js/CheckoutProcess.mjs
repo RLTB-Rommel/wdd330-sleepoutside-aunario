@@ -16,7 +16,7 @@ export function isExpiredCard(expiration) {
   // Ensure exact format MM/YY with no extra characters
   const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
   if (!regex.test(expiration)) {
-    alertMessage("❌ Invalid expiration format. Use MM/YY (e.g., 12/26).");
+    alertMessage("Invalid expiration format. Use MM/YY (e.g., 12/26).");
     return true;
   }
 
@@ -29,7 +29,7 @@ export function isExpiredCard(expiration) {
   const now = new Date();
 
   if (now >= expiryDate) {
-    alertMessage("❌ Card is expired. Please enter a valid expiration date.");
+    alertMessage("Invalid expiration date. Please enter a valid expiration date.");
     return true;
   }
 
