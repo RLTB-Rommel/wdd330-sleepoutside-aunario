@@ -75,39 +75,42 @@ export default class CheckoutProcess {
     this.orderTotal = orderTotal;
   }
 
-  async checkout(form) {
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+async checkout(form) {
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
 
-    const order = {
-      orderDate: new Date().toISOString(),
-      fname: data.fname,
-      lname: data.lname,
-      street: data.street,
-      city: data.city,
-      state: data.state,
-      zip: data.zip,
-      cardNumber: data.cardNumber,
-      expiration: data.expiration,
-      code: data.code,
-      items: packageItems(this.list),
-      orderTotal: this.orderTotal.toFixed(2),
-      shipping: this.shipping,
-      tax: this.tax.toFixed(2)
-    };
-
-    try {
-      const response = await this.services.checkout(order);
-      console.log("Order submitted:", response);
-      sessionStorage.setItem("recent-order", JSON.stringify(order));
-      localStorage.removeItem(this.key);
-      form.reset();
-
-      window.location.href = "./success.html";
-    } catch (err) {
-      console.error("Checkout failed:", err);
-      alertMessage("❌ Checkout failed. Please check your inputs or try again later.");
-
-    }
+  // Expiration date validation
+  if (isExpiredCard(data.expiration)) {
+    return; // stop processing
   }
+
+  const order = {
+    orderDate: new Date().toISOString(),
+    fname: data.fname,
+    lname: data.lname,
+    street: data.street,
+    city: data.city,
+    state: data.state,
+    zip: data.zip,
+    cardNumber: data.cardNumber,
+    expiration: data.expiration,
+    code: data.code,
+    items: packageItems(this.list),
+    orderTotal: this.orderTotal.toFixed(2),
+    shipping: this.shipping,
+    tax: this.tax.toFixed(2)
+  };
+
+  try {
+    const response = await this.services.checkout(order);
+    console.log("Order submitted:", response);
+    sessionStorage.setItem("recent-order", JSON.stringify(order));
+    localStorage.removeItem(this.key);
+    form.reset();
+    window.location.href = "./success.html";
+  } catch (err) {
+    console.error("Checkout failed:", err);
+    alertMessage("Checkout failed. Please check your inputs or try again later.");
+  }
+}
 }
