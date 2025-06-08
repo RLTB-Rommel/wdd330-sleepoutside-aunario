@@ -15,9 +15,6 @@
       <section class="products">
         <h2>Review & Place your Order</h2>
 
-        <!-- Alert container for dynamic alerts -->
-        <div id="alert-container"></div>
-
         <form id="checkout-form" name="checkout">
           <fieldset>
             <legend>Customer Information</legend>
@@ -31,31 +28,30 @@
 
           <fieldset>
             <legend>Payment Information</legend>
-            <label>Card Number:
-              <input type="text" name="cardNumber" required value="1234123412341234" />
-            </label>
-            <label>Expiration Date:
-              <input
-                type="text"
-                name="expiration"
-                required
-                placeholder="MM/YY"
-                pattern="\d{2}/\d{2}"
-                title="Use format MM/YY"
-              />
-            </label>
-            <label>Security Code:
-              <input type="text" name="code" required value="123" />
-            </label>
+            <label>Card Number: <input type="text" name="cardNumber" required value="1234123412341234" /></label>
+            <label>Expiration Date: <input type="text" name="expiration" required value="12/26" /></label>
+            <label>Security Code: <input type="text" name="code" required value="123" /></label>
           </fieldset>
 
           <fieldset class="order-summary">
             <legend>Order Summary</legend>
             <ul>
-              <li><label>Item Subtotal:</label> <p class="subtotal">$0.00</p></li>
-              <li><label>Shipping Estimate:</label> <p class="shipping">$0.00</p></li>
-              <li><label>Tax:</label> <p class="tax">$0.00</p></li>
-              <li><label><strong>Order Total:</strong></label> <p class="order-total">$0.00</p></li>
+              <li>
+                <label>Item Subtotal:</label>
+                <p class="subtotal">$0.00</p>
+              </li>
+              <li>
+                <label>Shipping Estimate:</label>
+                <p class="shipping">$0.00</p>
+              </li>
+              <li>
+                <label>Tax:</label>
+                <p class="tax">$0.00</p>
+              </li>
+              <li>
+                <label><strong>Order Total:</strong></label>
+                <p class="order-total">$0.00</p>
+              </li>
             </ul>
           </fieldset>
 
