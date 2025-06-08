@@ -1,5 +1,5 @@
 import ExternalServices from "./ExternalServices.mjs";
-import { getLocalStorage, alertMessage } from "./utils.mjs";
+import { getLocalStorage } from "./utils.mjs";
 
 const taxRate = 0.06;
 
@@ -10,17 +10,6 @@ function packageItems(items) {
     price: item.FinalPrice,
     quantity: item.quantity || 1
   }));
-}
-
-function isExpiredCard(expiration) {
-  // Expecting format MM/YY
-  const [month, year] = expiration.split("/").map(str => parseInt(str));
-  if (!month || !year || month < 1 || month > 12) return true;
-
-  const expiryDate = new Date(`20${year}`, month); // 1st of next month
-  const now = new Date();
-
-  return now >= expiryDate;
 }
 
 export default class CheckoutProcess {
@@ -45,6 +34,7 @@ export default class CheckoutProcess {
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
 
+    // Check for element existence before trying to set textContent
     const subtotalElem = document.querySelector(".subtotal");
     const taxElem = document.querySelector(".tax");
     const shippingElem = document.querySelector(".shipping");
@@ -64,11 +54,6 @@ export default class CheckoutProcess {
   async checkout(form) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-
-    if (isExpiredCard(data.expiration)) {
-      alertMessage("❌ Card is expired. Please enter a valid expiration date.");
-      return;
-    }
 
     const order = {
       orderDate: new Date().toISOString(),
@@ -90,18 +75,9 @@ export default class CheckoutProcess {
     try {
       const response = await this.services.checkout(order);
       console.log("Order submitted:", response);
-
-      // Save order for success page
-      sessionStorage.setItem("recent-order", JSON.stringify(order));
-
-      // Reset cart and form
-      localStorage.removeItem(this.key);
-      form.reset();
-
       window.location.href = "./success.html";
     } catch (err) {
       console.error("Checkout failed:", err);
-      alertMessage("❌ Checkout failed. Please check your inputs or try again later.");
     }
   }
 }
