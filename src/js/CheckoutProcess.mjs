@@ -12,13 +12,6 @@ function packageItems(items) {
   }));
 }
 
-function isCardExpired(expiration) {
-  const [month, year] = expiration.split("/").map(Number);
-  if (!month || !year) return true;
-  const expDate = new Date(2000 + year, month);
-  return new Date() >= expDate;
-}
-
 export default class CheckoutProcess {
   constructor(key) {
     this.key = key;
@@ -41,10 +34,15 @@ export default class CheckoutProcess {
     const shipping = 10 + (this.list.length - 1) * 2;
     const orderTotal = subtotal + tax + shipping;
 
-    qs(".subtotal").textContent = `$${subtotal.toFixed(2)}`;
-    qs(".tax").textContent = `$${tax.toFixed(2)}`;
-    qs(".shipping").textContent = `$${shipping.toFixed(2)}`;
-    qs(".order-total").textContent = `$${orderTotal.toFixed(2)}`;
+    const subtotalElem = document.querySelector(".subtotal");
+    const taxElem = document.querySelector(".tax");
+    const shippingElem = document.querySelector(".shipping");
+    const orderTotalElem = document.querySelector(".order-total");
+
+    if (subtotalElem) subtotalElem.textContent = `$${subtotal.toFixed(2)}`;
+    if (taxElem) taxElem.textContent = `$${tax.toFixed(2)}`;
+    if (shippingElem) shippingElem.textContent = `$${shipping.toFixed(2)}`;
+    if (orderTotalElem) orderTotalElem.textContent = `$${orderTotal.toFixed(2)}`;
 
     this.subtotal = subtotal;
     this.tax = tax;
@@ -53,12 +51,8 @@ export default class CheckoutProcess {
   }
 
   async checkout(form) {
-    const data = Object.fromEntries(new FormData(form).entries());
-
-    if (isCardExpired(data.expiration)) {
-      alertMessage("Card is expired. Please enter a valid expiration date.");
-      return;
-    }
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
     const order = {
       orderDate: new Date().toISOString(),
@@ -84,8 +78,11 @@ export default class CheckoutProcess {
       window.location.href = "./success.html";
     } catch (err) {
       console.error("Checkout failed:", err);
-      const message = err?.message?.message || err?.message || "Unexpected error. Please try again.";
-      alertMessage(message);
+      if (err.name === "servicesError") {
+        alertMessage(err.message.message || "An error occurred during checkout.");
+      } else {
+        alertMessage("Unexpected error. Please try again.");
+      }
     }
   }
 }
