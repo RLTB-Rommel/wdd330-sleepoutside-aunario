@@ -30,7 +30,7 @@ export default class ExternalServices {
   }
 
   async checkout(order) {
-    const url = 'https://wdd330-backend.onrender.com:3000/checkout';
+    const url = 'https://wdd330-backend.onrender.com/checkout';
     const options = {
       method: 'POST',
       headers: {
