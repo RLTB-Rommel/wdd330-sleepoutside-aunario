@@ -12,15 +12,18 @@ function packageItems(items) {
   }));
 }
 function isExpiredCard(expiration) {
-  // Expecting format MM/YY
-  const [month, year] = expiration.split("/").map(str => parseInt(str));
-  if (!month || !year || month < 1 || month > 12) return true;
+  // Must match MM/YY format exactly (2 digits + slash + 2 digits)
+  const regex = /^\d{2}\/\d{2}$/;
+  if (!regex.test(expiration)) return true;
 
-  const expiryDate = new Date(`20${year}`, month); // First of the next month
+  const [month, year] = expiration.split("/").map(Number);
+  if (month < 1 || month > 12) return true;
+
+  const expiryDate = new Date(`20${year}`, month); // 1st of next month
   const now = new Date();
-
   return now >= expiryDate;
 }
+
 export default class CheckoutProcess {
   constructor(key) {
     this.key = key;
