@@ -4,8 +4,12 @@ function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
 
   if (cartItems.length === 0) {
-    document.querySelector(".product-list").innerHTML =
-      `<p class="empty-cart-msg">Your cart is empty.</p>`;
+    document.querySelector(".product-list").innerHTML = `
+      <div class="empty-cart-msg">
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added anything yet.</p>
+        <a href="/product_listing/index.html" class="shop-now-button">Continue Shopping</a>
+      </div>`;
     return;
   }
 
