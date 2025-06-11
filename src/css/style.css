@@ -365,7 +365,10 @@ footer {
   margin-bottom: 1.5rem;
 }
 
-.shop-now-button {
+.shop-now-button,
+.shop-now-button:visited,
+.shop-now-button:hover,
+.shop-now-button:active {
   display: inline-block;
   background-color: #3a5500;
   color: #fff;
