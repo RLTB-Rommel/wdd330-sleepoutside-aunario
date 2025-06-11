@@ -341,3 +341,10 @@ footer {
 #alert-container {
   margin-bottom: 1rem;
 }
+
+.empty-cart-msg {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #555;
+  margin: 2rem 0;
+}
