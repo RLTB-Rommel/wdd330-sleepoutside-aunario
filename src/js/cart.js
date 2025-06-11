@@ -6,7 +6,7 @@ function renderCartContents() {
   if (cartItems.length === 0) {
     document.querySelector(".product-list").innerHTML = `
       <div class="empty-cart-msg">
-        <h2>Your cart is empty 🛒</h2>
+        <h2>Your cart is empty</h2>
         <p>Looks like you haven't added anything yet.</p>
         <a href="/index.html" class="shop-now-button">Continue Shopping</a>
       </div>`;
