@@ -1,103 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sleep Outside | Home</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <script src="js/main.js" type="module"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sleep Outside | Home</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="js/main.js" type="module"></script>
+</head>
+<body>
+  <header class="divider">
+    <div class="logo">
+      <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
+      <a href="index.html"> Sleep<span class="highlight">Outside</span></a>
+    </div>
+    <div class="cart">
+      <a href="cart/index.html">🛒</a>
+    </div>
+  </header>
 
-  <body>
-    <header class="divider">
-      <div class="logo">
+  <main class="divider">
+    <div class="hero">
+      <img src="/images/banner-sm.jpg"
+           srcset="/images/banner-sm.jpg 500w, /images/banner.jpg"
+           alt="image of a high mountain lake" />
+      <div class="logo logo--square">
         <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
-        <a href="index.html"> Sleep<span class="highlight">Outside</span></a>
+        <div>Sleep<span class="highlight">Outside</span></div>
       </div>
-      <div class="cart">
-        <a href="cart/index.html">🛒</a>
+      <div class="mission">
+        <p>
+          Our mission is to provide you with everything you need to sleep
+          outside comfortably at an affordable price.
+        </p>
       </div>
-    </header>
+    </div>
 
-    <main class="divider">
-      <div class="hero">
-        <img src="/images/banner-sm.jpg"
-             srcset="/images/banner-sm.jpg 500w, /images/banner.jpg"
-             alt="image of a high mountain lake" />
-        <div class="logo logo--square">
-          <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
-          <div>Sleep<span class="highlight">Outside</span></div>
-        </div>
-        <div class="mission">
-          <p>
-            Our mission is to provide you with everything you need to sleep
-            outside comfortably at an affordable price.
-          </p>
-        </div>
-      </div>
-
-      <!-- Category Icons -->
-      <section class="categories">
-        <a href="product_listing/index.html?category=tents">
-          <img src="images/icons/category-tents.svg" alt="Tents" />
-          <p>Tents</p>
-        </a>
-        <a href="product_listing/index.html?category=backpacks">
-          <img src="images/icons/category-backpacks.svg" alt="Backpacks" />
-          <p>Backpacks</p>
-        </a>
-        <a href="product_listing/index.html?category=sleeping-bags">
-          <img src="images/icons/category-sleepingbags.svg" alt="Sleeping Bags" />
-          <p>Sleeping Bags</p>
-        </a>
-        <a href="product_listing/index.html?category=hammocks">
-          <img src="images/icons/category-hammocks.svg" alt="Hammocks" />
-          <p>Hammocks</p>
-        </a>
-      </section>
-
-      <!-- Featured Products -->
-      <section class="products">
-        <h2>Top Products</h2>
-        <ul class="product-list">
-          <li class="product-card">
+    <!-- Featured Products -->
+    <section class="products">
+      <h2>Top Products</h2>
+      <ul class="product-list">
+        <li class="product-card" data-brand="Marmot">
+          <div class="product-display">
             <a href="product_pages/?product=880RR">
-              <img src="images/tents/marmot-ajax-tent-3-person-3-season-in-pale-pumpkin-terracotta~p~880rr_01~320.jpg" alt="Marmot Ajax tent" />
-              <h3 class="card__brand">Marmot</h3>
-              <h2 class="card__name">Ajax Tent - 3-Person, 3-Season</h2>
-              <p class="product-card__price">$199.99</p>
+              <img src="images/tents/marmot-ajax.jpg" alt="Marmot Tent" />
             </a>
-          </li>
-          <li class="product-card">
-            <a href="product_pages/?product=985RF">
-              <img src="images/tents/the-north-face-talus-tent-4-person-3-season-in-golden-oak-saffron-yellow~p~985rf_01~320.jpg" alt="Talus Tent" />
-              <h3 class="card__brand">The North Face</h3>
-              <h2 class="card__name">Talus Tent - 4-Person, 3-Season</h2>
-              <p class="product-card__price">$199.99</p>
-            </a>
-          </li>
-          <li class="product-card">
-            <a href="product_pages/?product=985PR">
-              <img src="images/tents/the-north-face-alpine-guide-tent-3-person-4-season-in-canary-yellow-high-rise-grey~p~985pr_01~320.jpg" alt="Alpine Guide Tent" />
-              <h3 class="card__brand">The North Face</h3>
-              <h2 class="card__name">Alpine Guide Tent - 3-Person, 4-Season</h2>
-              <p class="product-card__price">$349.99</p>
-            </a>
-          </li>
-          <li class="product-card">
-            <a href="product_pages/?product=344YJ">
-              <img src="images/tents/cedar-ridge-rimrock-tent-2-person-3-season-in-rust-clay~p~344yj_01~320.jpg" alt="Rimrock Tent" />
-              <h3 class="card__brand">Cedar Ridge</h3>
-              <h2 class="card__name">Rimrock Tent - 2-Person, 3-Season</h2>
-              <p class="product-card__price">$69.99</p>
-            </a>
-          </li>
-        </ul>
-      </section>
-    </main>
+            <h3 class="card__brand">Marmot</h3>
+            <h2 class="card__name">Ajax Tent - 3-Person</h2>
+            <p class="product-card__price">$199.99</p>
+          </div>
+          <div class="variant-select">
+            <input type="radio" name="marmot-variant" data-index="0" checked />
+            <input type="radio" name="marmot-variant" data-index="1" />
+            <input type="radio" name="marmot-variant" data-index="2" />
+          </div>
+        </li>
 
-    <footer>
-      &copy;2025 ⛺ SleepOutside ⛺ WDD 330 ⛺ BYU-Idaho for BYU-Pathway Worldwide Online
-    </footer>
-  </body>
+        <li class="product-card" data-brand="The North Face">
+          <div class="product-display">
+            <a href="product_pages/?product=985RF">
+              <img src="images/tents/northface-talus.jpg" alt="North Face Tent" />
+            </a>
+            <h3 class="card__brand">The North Face</h3>
+            <h2 class="card__name">Talus Tent - 4-Person</h2>
+            <p class="product-card__price">$249.99</p>
+          </div>
+          <div class="variant-select">
+            <input type="radio" name="northface-variant" data-index="0" checked />
+            <input type="radio" name="northface-variant" data-index="1" />
+            <input type="radio" name="northface-variant" data-index="2" />
+          </div>
+        </li>
+
+        <li class="product-card" data-brand="Cedar Ridge">
+          <div class="product-display">
+            <a href="product_pages/?product=344YJ">
+              <img src="images/tents/cedar-ridge-rimrock.jpg" alt="Cedar Ridge Tent" />
+            </a>
+            <h3 class="card__brand">Cedar Ridge</h3>
+            <h2 class="card__name">Rimrock Tent - 2-Person</h2>
+            <p class="product-card__price">$89.99</p>
+          </div>
+          <div class="variant-select">
+            <input type="radio" name="cedarridge-variant" data-index="0" checked />
+            <input type="radio" name="cedarridge-variant" data-index="1" />
+            <input type="radio" name="cedarridge-variant" data-index="2" />
+          </div>
+        </li>
+
+        <li class="product-card" data-brand="Big Agnes">
+          <div class="product-display">
+            <a href="product_pages/?product=441XA">
+              <img src="images/tents/big-agnes-copper-spur.jpg" alt="Big Agnes Tent" />
+            </a>
+            <h3 class="card__brand">Big Agnes</h3>
+            <h2 class="card__name">Copper Spur - 2-Person</h2>
+            <p class="product-card__price">$329.99</p>
+          </div>
+          <div class="variant-select">
+            <input type="radio" name="bigagnes-variant" data-index="0" checked />
+            <input type="radio" name="bigagnes-variant" data-index="1" />
+            <input type="radio" name="bigagnes-variant" data-index="2" />
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    &copy;2025 ⛺ Traveller Planner ⛺ WDD 330 ⛺ BYU-Idaho for BYU-Pathway Worldwide Online
+  </footer>
+</body>
 </html>

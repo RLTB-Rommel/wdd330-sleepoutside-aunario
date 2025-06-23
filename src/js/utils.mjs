@@ -3,40 +3,58 @@ export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
 
-// retrieve data from localstorage
+// safely retrieve data from localStorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
+  } catch (e) {
+    console.warn(`[getLocalStorage] Failed to parse data for key: ${key}`, e);
+    return null;
+  }
 }
-// save data to local storage
+
+// save data to localStorage
 export function setLocalStorage(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (e) {
+    console.warn(`[setLocalStorage] Failed to save data for key: ${key}`, e);
+  }
 }
+
+// clear key from localStorage
+export function clearLocalStorageKey(key) {
+  localStorage.removeItem(key);
+}
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
+  const element = qs(selector);
+  if (!element) return;
+
+  element.addEventListener("touchend", (event) => {
     event.preventDefault();
     callback();
   });
-  qs(selector).addEventListener("click", callback);
+  element.addEventListener("click", callback);
 }
 
-// get the product id from the query string
+// get a URL query parameter by name
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get(param);
-  return product
+  return urlParams.get(param);
 }
 
+// render a list of items using a template function
 export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
   const htmlStrings = list.map(template);
-  // if clear is true, clear out the contents of the parent.
-  if (clear) {
-    parentElement.innerHTML = "";
-  }
+  if (clear) parentElement.innerHTML = "";
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
+// load external header and footer HTML into current page
 export function loadHeaderFooter() {
   const header = document.querySelector("header");
   const footer = document.querySelector("footer");
@@ -61,6 +79,8 @@ export function loadHeaderFooter() {
     })
     .catch((err) => console.warn("[Footer Error]", err.message));
 }
+
+// insert alert message into top of main content
 export function alertMessage(message, scroll = true) {
   const alert = document.createElement("div");
   alert.classList.add("alert");
@@ -76,9 +96,8 @@ export function alertMessage(message, scroll = true) {
   });
 
   const main = document.querySelector("main");
-  main.prepend(alert);
-
-  if (scroll) {
-    window.scrollTo(0, 0);
+  if (main) {
+    main.prepend(alert);
+    if (scroll) window.scrollTo(0, 0);
   }
 }
